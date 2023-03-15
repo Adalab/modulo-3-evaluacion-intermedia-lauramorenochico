@@ -1,1 +1,44 @@
-/* Aquí van tus estilos */
+.header {
+    background-image:url(//backend.fueradefoco.com.mx/wp-content/uploads/2021/05/Friends-Portada-1-768x432.jpg);
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 650px;
+}
+.form {
+background-color: #483546;
+display:flex;
+justify-content: space-around;
+margin-bottom: 20px;
+
+}
+.label {
+color: whitesmoke;
+font-size: 30px;
+padding-right: 10px;
+}
+.input {
+font-size: 25px;
+border-radius:7px ;
+}
+.character {
+font-size: 25px;
+border-radius: 7px;
+}
+
+.quote_item{
+margin: 10px 20px;
+border: 2px solid black;
+padding: 10px 10px;
+border-radius: 10px;
+box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+list-style-type: none;
+}
+.text {
+font-style: oblique;  
+
+}
+.textName {
+color: #7C709F;
+padding: 10px;
+}

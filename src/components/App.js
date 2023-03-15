@@ -1,13 +1,13 @@
 import "../styles/App.scss";
 import quotes from "../data/api.json";
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 function App() {
   //variables de estado
   const [data, setData] = useState(quotes);
   const [search, setSearch] = useState('');
   const [filterCh, setfilterCh] = useState('');
-  const [newQuote, SetnewQuote] = useState ({
+  const [newQuote, SetNewQuote] = useState ({
     quote:'',
     character: '',
     });
@@ -21,21 +21,24 @@ function App() {
       .filter((eachQuote) => {
         return eachQuote.character.toLowerCase().includes(filterCh.toLowerCase()) 
       })
+     
+
       .map((eachQuote, index) => (
         <li className="quote_item" key={index}>
-          <p> Quote: {eachQuote.quote}</p>
-          <p>Character: {eachQuote.character}</p>
+          <p className="text">{eachQuote.quote}</p>
+          <p className="textName">-{eachQuote.character}</p>
         </li>
       ));
   };
 
   //función que me permite modificar el input de filtrado
   const handleQuoteFilter = (ev) => {
+    ev.preventDefault();
     setSearch(ev.target.value);
   };
 
   const handleCharacter = (ev) => {
-   if (ev.target.value==="Todos")
+   if (ev.target.value=== 'All')
     {
       setfilterCh('');
     }
@@ -45,24 +48,25 @@ function App() {
   };
 
   const hadleNewQuote = (ev) => {
-    SetnewQuote({...newQuote, [ev.target.id]: ev.target.value}); 
+    SetNewQuote({...newQuote, [ev.target.id]: ev.target.value}); 
 } 
   
 
 const handleClick = (ev) => {
     ev.preventDefault();
     setData([...data, newQuote]);
-    SetnewQuote({ quote: '', character: '', });
+    SetNewQuote({ quote: '', character: '', });
   };
 
   //HTML
   return (
     <div className="App">
-      <header>
-        <h1 className="tittle">Friends</h1>
-        <form>
+      <header className="header">
+      </header>  {/*<h1 className="tittle">Friends</h1>*/}
+         <main>
+        <form className="form">
           <label className="label" htmlFor="search">
-            filter by quote
+            Filter by quote&nbsp;&nbsp;
             <input
               className="input"
               autoComplete="off"
@@ -74,23 +78,22 @@ const handleClick = (ev) => {
               value={search}
             />
           </label>
-          <label className="label" htmlFor="filter_character"  value={filterCh} onChange={handleCharacter}>
-            filter by character
-           <select className='character' id='filter_character'>
-            <option>All</option>
-            <option>Monica</option>
-            <option>Rachel</option>
-            <option>Phoebe</option>
-            <option>Ross</option>
-            <option>Chandler</option>
-            <option>Joey</option>
+          <label className="label" htmlFor="filter_character">  
+            Filter by character&nbsp;&nbsp;
+           <select className='character' id='filter_character' onChange={handleCharacter} value={filterCh}>
+            <option value=''>All</option>
+            <option value='Monica'>Monica</option>
+            <option value='Rachel'>Rachel</option>
+            <option value='Phoebe'>Phoebe</option>
+            <option value='Ross'>Ross</option>
+            <option value='Chandler'>Chandler</option>
+            <option value='Joey'>Joey</option>
             </select>
           </label>
-        </form>
-                  
-      </header>
+        </form>        
+      
 
-      <main>
+      
         <ul className="quote_list">{renderList()}</ul>
 
         {/*nuevo formulario para añadir frase/personaje*/}
