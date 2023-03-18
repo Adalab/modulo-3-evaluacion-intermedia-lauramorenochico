@@ -1,16 +1,25 @@
 import "../styles/App.scss";
-import quotes from "../data/api.json";
-import {useState} from 'react';
+import getSentenceApi from "../services/api";
+import {useEffect,useState} from 'react';
+
 
 function App() {
   //variables de estado
-  const [data, setData] = useState(quotes);
+  const [data, setData] = useState([]); // quito "quotes" y pongo un array vacío.
   const [search, setSearch] = useState('');
-  const [filterCh, setfilterCh] = useState('');
+  const [filterCh, setfilterCh] = useState('All');
   const [newQuote, SetNewQuote] = useState ({
     quote:'',
     character: '',
     });
+ 
+
+useEffect(() => {
+    getSentenceApi().then((response) => {
+      setData(response);
+    });
+  }, []);
+
 
   //funciones auxiliares para que se pinte el HTML
   const renderList = () => {
@@ -19,11 +28,14 @@ function App() {
         return eachQuote.quote.toLowerCase().includes(search.toLowerCase()) 
       })
       .filter((eachQuote) => {
-        return eachQuote.character.toLowerCase().includes(filterCh.toLowerCase()) 
-      })
-     
-
-      .map((eachQuote, index) => (
+        if (filterCh !== "All") {
+          return (eachQuote.character.toLowerCase()=== filterCh.toLowerCase()
+      );
+  } else{
+    return eachQuote;
+    }
+  })
+     .map((eachQuote, index) => (
         <li className="quote_item" key={index}>
           <p className="text">{eachQuote.quote}</p>
           <p className="textName">-{eachQuote.character}</p>
@@ -33,19 +45,12 @@ function App() {
 
   //función que me permite modificar el input de filtrado
   const handleQuoteFilter = (ev) => {
-    ev.preventDefault();
     setSearch(ev.target.value);
   };
 
   const handleCharacter = (ev) => {
-   if (ev.target.value=== 'All')
-    {
-      setfilterCh('');
-    }
-    else{
-      setfilterCh (ev.target.value);
-    }
-  };
+    setfilterCh(ev.target.value);
+      };
 
   const hadleNewQuote = (ev) => {
     SetNewQuote({...newQuote, [ev.target.id]: ev.target.value}); 
@@ -54,9 +59,9 @@ function App() {
 
 const handleClick = (ev) => {
     ev.preventDefault();
-    setData([...data, newQuote]);
-    SetNewQuote({ quote: '', character: '', });
-  };
+      setData([...data, newQuote]);
+      SetNewQuote({ quote: '', character: '', });
+}
 
   //HTML
   return (
@@ -81,7 +86,7 @@ const handleClick = (ev) => {
           <label className="label" htmlFor="filter_character">  
             Filter by character&nbsp;&nbsp;
            <select className='character' id='filter_character' onChange={handleCharacter} value={filterCh}>
-            <option value=''>All</option>
+            <option value='All'>All</option>
             <option value='Monica'>Monica</option>
             <option value='Rachel'>Rachel</option>
             <option value='Phoebe'>Phoebe</option>
