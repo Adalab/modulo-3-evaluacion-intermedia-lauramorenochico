@@ -8,7 +8,7 @@ function App() {
   const [data, setData] = useState([]); // quito "quotes" y pongo un array vacío.
   const [search, setSearch] = useState('');
   const [filterCh, setfilterCh] = useState('All');
-  const [newQuote, SetNewQuote] = useState ({
+  const [newQuote, setNewQuote] = useState ({
     quote:'',
     character: '',
     });
@@ -53,14 +53,15 @@ useEffect(() => {
       };
 
   const hadleNewQuote = (ev) => {
-    SetNewQuote({...newQuote, [ev.target.id]: ev.target.value}); 
+    setNewQuote({...newQuote, [ev.target.id]: ev.target.value}); 
 } 
   
 
 const handleClick = (ev) => {
     ev.preventDefault();
+    if (newQuote.quote !== '' && newQuote.character !== ''){
       setData([...data, newQuote]);
-      SetNewQuote({ quote: '', character: '', });
+      setNewQuote({ quote: '', character: '', }); //limpia los inputs
 }
 
   //HTML
