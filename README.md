@@ -1,7 +1,7 @@
 
-# Firends Phrase Finder // Buscador de frases de Firends
+# Friends Phrase Finder // Buscador de frases de Friends
 
-Search engine that allows you to search for the most representative phrases of each character.
+Search engine that allows you to search for the most representative phrases of each character. </br>
 Buscador que permite buscar las frases más representativas de cada personaje.
 
 
